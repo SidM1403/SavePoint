@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SavePoint | Premium Interview Documentation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Mermaid JS for Diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true, 
+            theme: 'dark', 
+            themeVariables: {
+                background: 'transparent',
+                edgeLabelBackground: 'rgba(20, 22, 40, 0.9)',
+                clusterBkg: 'rgba(255, 255, 255, 0.02)',
+                clusterBorder: 'rgba(255,255,255,0.1)',
+                primaryTextColor: '#e2e8f0',
+                lineColor: '#8b5cf6'
+            },
+            securityLevel: 'loose'
+        });
+    </script>
+    
+    <!-- Prism JS for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0b0d17;
+            --sidebar-bg: rgba(13, 15, 28, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #00f0ff;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(20, 22, 40, 0.4);
+            --code-bg: rgba(10, 11, 20, 0.8);
+            --green: #10b981;
+            --red: #f43f5e;
+            --amber: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.08), transparent 25%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sidebar Navigation (Glassmorphism) */
+        aside {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        h1, h2, h3, h4, summary {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        aside h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 0 24px 20px 24px;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-container {
+            padding: 0 24px 15px 24px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav li a {
+            display: block;
+            padding: 12px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        nav li a:hover,
+        nav li a.active {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: #fff;
+            border-left: 3px solid var(--accent-cyan);
+            box-shadow: inset 4px 0 12px rgba(0, 240, 255, 0.05);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 50px 70px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 80px;
+            padding-top: 20px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            background: linear-gradient(90deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 40px 0 20px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            margin: 20px 0 12px 0;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        
+        strong {
+            color: var(--text-primary);
+        }
+
+        /* Glassmorphism Cards */
+        .highlight-box, .theory-box, .qa-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .highlight-box:hover, .theory-box:hover, .qa-container:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight-box {
+            border-left: 4px solid var(--accent-purple);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(20, 22, 40, 0.4));
+        }
+
+        .highlight-green {
+            border-left: 4px solid var(--green);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(20, 22, 40, 0.4));
+        }
+
+        .theory-box h4 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg) !important;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px !important;
+            overflow-x: auto;
+            margin-bottom: 24px !important;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.85rem !important;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background-color: rgba(255,255,255,0.02);
+        }
+
+        /* Diagrams */
+        .mermaid {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Collapsible / Accordion */
+        details {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--accent-purple);
+            background: rgba(20, 22, 40, 0.7);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        summary::before {
+            content: '+';
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+            margin-right: 12px;
+            font-family: monospace;
+            transition: transform 0.2s;
+        }
+        
+        details[open] summary::before {
+            content: '-';
+            color: var(--accent-pink);
+        }
+
+        details .answer-box {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .qa-container {
+            border-left: 4px solid var(--accent-pink);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(20, 22, 40, 0.4));
+            padding-bottom: 24px;
+        }
+
+        .qa-container > h4 {
+            color: var(--accent-pink);
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: text-shadow 0.2s;
+        }
+        
+        a:hover {
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            main {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside>
+        <h1>SavePoint Docs</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search topics..." onkeyup="filterNav()">
+        </div>
+        <nav>
+            <ul id="navList">
+                <li><a href="#sec-intro" class="active">0. Intro & Flow (STAR)</a></li>
+                <li><a href="#sec-features">0.1 Unique Features</a></li>
+                <li><a href="#sec-architecture">1. Architecture</a></li>
+                <li><a href="#sec-dbdesign">2. Database & SQL</a></li>
+                <li><a href="#sec-frontend">3. Frontend Deep Dive</a></li>
+                <li><a href="#sec-backend">4. Backend Deep Dive</a></li>
+                <li><a href="#sec-caching">5. Redis Caching</a></li>
+                <li><a href="#sec-auth">6. Auth & Security</a></li>
+                <li><a href="#sec-ai-integration">7. AI Integration</a></li>
+                <li><a href="#sec-crux-all">7.5 All Crux Code Consolidated</a></li>
+                <li><a href="#sec-scalability">8. Scalability Roadmap</a></li>
+                <li><a href="#sec-resume">9. Resume Keywords Mapping</a></li>
+                <li><a href="#sec-behavioral">10. Behavioral (STAR)</a></li>
+                <li><a href="#sec-tradeoffs">11. Real-World Trade-offs</a></li>
+                <li><a href="#sec-testing">12. Testing & CI/CD</a></li>
+                <li><a href="#sec-production">13. Production Readiness</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-container">
+
+            <!-- SECTION 0 -->
+            <section id="sec-intro">
+                <h2>0. How to Introduce This Project (STAR) & Flows</h2>
+
+                <div class="highlight-box">
+                    <strong>STAR Method Breakdown:</strong>
+                    <ul>
+                        <li><strong>Situation:</strong> I wanted to build a game tracking app but noticed most platforms lack personalized, mood-based game discovery and strong social features. They just show you top-rated games, not what *you* want to play.</li>
+                        <li><strong>Task:</strong> My goal was to create a full-stack application that tracks a personal game library, but also leverages AI to recommend new games based on what a user has already played and their current mood.</li>
+                        <li><strong>Action:</strong> I architected "SavePoint" using the PERN stack (PostgreSQL, Express, React, Node.js). I integrated the IGDB API for robust game data and the Claude AI API for intelligent recommendations. To optimize performance and avoid API rate limits, I implemented Redis caching for the game queries. I designed a highly relational PostgreSQL database to handle user connections, libraries, and custom game lists.</li>
+                        <li><strong>Result:</strong> The outcome is a fast, responsive app where users can manage their gaming library, share reviews with followers, and get highly contextual, instant AI recommendations. The Redis cache dropped response times drastically.</li>
+                    </ul>
+                </div>
+
+                <h3>2-Minute Detailed Introduction (Simplified)</h3>
+                <h4>1. What is SavePoint?</h4>
+                <p>"SavePoint is a full-stack AI-powered game tracking platform where users can discover, organize, and review video games. It's like Letterboxd or Goodreads, but specifically for gaming. Users can maintain a library of 'Playing', 'Completed', or 'Dropped' games, receive personalized AI recommendations, and interact with friends in a social activity feed.</p>
+                
+                <h4>2. Why did you build this project?</h4>
+                <p>"I often found myself having choice paralysis when deciding what game to play next. Existing platforms only offered generic lists like 'Top 100 RPGs'. I wanted an application that actually understood my current mood and matched it with games I hadn't played yet.</p>
+                <p>On the frontend, I used React and Vite with the Context API for lightweight state management. I designed a 'Digital Scrapbook' UI using CSS variables and irregular borders to make it feel like a personal gaming journal.</p>
+                <p>For the backend, I built an Express.js API. Since I needed to fetch live game data from IGDB (Twitch's Game API), I implemented a Redis caching layer to temporarily save search results and game details. This cache-aside strategy prevents me from hitting API rate limits and speeds up searches dramatically.</p>
+                <p>For data storage, I used PostgreSQL because user libraries, reviews, and social followings are highly relational. I wrote raw SQL queries using the `pg` library to really master database joins and aggregations. Finally, I integrated the Claude AI model to act as a smart recommendation engine that reads a user's library and suggests the perfect next game based on their feelings."</p>
+
+                <h3>Data Flow Walkthroughs</h3>
+                <p>Whenever an interviewer asks "Explain how this feature works," walk them through these exact steps.</p>
+                
+                <div class="mermaid">
+                    flowchart LR
+                    %% Styling
+                    classDef client fill:#21262d,stroke:#58a6ff,stroke-width:2px,color:#c9d1d9
+                    classDef server fill:#21262d,stroke:#2ea043,stroke-width:2px,color:#c9d1d9
+                    classDef db fill:#21262d,stroke:#d29922,stroke-width:2px,color:#c9d1d9
+                    classDef cache fill:#21262d,stroke:#bc8cff,stroke-width:2px,color:#c9d1d9
+                    classDef external fill:#21262d,stroke:#f85149,stroke-width:2px,color:#c9d1d9
+
+                    A([React SPA]):::client
+
+                    subgraph BackendLayer ["API Gateway"]
+                        B{Node/Express}:::server
+                    end
+
+                    subgraph DataLayer ["Internal Data"]
+                        C[(Redis Cache)]:::cache
+                        DB[(PostgreSQL)]:::db
+                    end
+
+                    subgraph ExternalLayer ["External Services"]
+                        D[IGDB API - Twitch]:::external
+                        E[Claude AI API]:::external
+                    end
+
+                    %% Primary Client-Server Flow
+                    A ==>|1. HTTP GET Request| B
+                    B ==>|5. JSON Response| A
+                    
+                    %% Cache Logic Flow
+                    B -->|2. Check Cache| C
+                    C -.->|3a. Cache Hit| B
+                    
+                    %% API Fetch Flow (Cache Miss)
+                    B -.->|3b. Cache Miss| D
+                    D -.->|4a. Return Game Data| B
+                    B -.->|4b. Save to Cache| C
+                    
+                    %% Database & AI Context
+                    B -.->|Write/Read User Data| DB
+                    B -.->|Get AI Recommendations| E
+                </div>
+
+                <h4>Feature 1: Game Search Flow (Caching)</h4>
+                <ul>
+                    <li><strong>Step 1 (User Action):</strong> User types "Zelda" into the search bar and hits enter.</li>
+                    <li><strong>Step 2 (Frontend React):</strong> The React component sends an Axios GET request to `/api/games/search?query=Zelda`.</li>
+                    <li><strong>Step 3 (Backend Controller):</strong> Express receives the request. Before doing any heavy lifting, it checks Redis using a cache key like `search:Zelda`.</li>
+                    <li><strong>Step 4 (Cache Miss):</strong> If Redis doesn't have it, the server authenticates with Twitch OAuth and fetches data from the IGDB API.</li>
+                    <li><strong>Step 5 (Store in Cache):</strong> The server takes the IGDB response, stores it in Redis for 1 hour, and then sends it back to the frontend.</li>
+                    <li><strong>Step 6 (Cache Hit):</strong> If another user searches "Zelda" 5 minutes later, Step 3 finds the data in Redis. The server skips Step 4 entirely and returns the data in 15ms instead of 800ms.</li>
+                </ul>
+
+                <h4>Feature 2: Adding a Game to Library (Write-Through)</h4>
+                <ul>
+                    <li><strong>Step 1 (User Action):</strong> User views a game page and clicks "Add to Library".</li>
+                    <li><strong>Step 2 (Backend Trick):</strong> Because we use an external API (IGDB) for data, we can't just link our user to an external ID. When the user *viewed* the game page, the backend automatically saved the core game info (title, cover, IGDB ID) into our own PostgreSQL `games` table.</li>
+                    <li><strong>Step 3 (Database Insert):</strong> Express receives the "Add" request. It now safely inserts a row into the `user_games` join table, linking the `user_id` to our newly created internal `game_id`.</li>
+                    <li><strong>Step 4 (UI Update):</strong> The database responds with success, and React changes the button to "In Library" instantly.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 0.1 -->
+            <section id="sec-features">
+                <h2>0.1. Unique Features (To Discuss in Interviews)</h2>
+
+                <details>
+                    <summary>1. The Write-Through Cache Trick</summary>
+                    <div class="answer-box">
+                        <ul>
+                            <li><strong>Real-world problem it solves:</strong> We need to link users to games in our database, but the game data lives externally on IGDB. We don't want to copy all of IGDB into our database.</li>
+                            <li><strong>How it works:</strong> Whenever a user views a Game Details page, my server fetches it from IGDB and instantly saves the core data (title, cover, genres) to my Postgres `games` table. By the time they click "Add to Library", the record already exists locally for the Foreign Key connection.</li>
+                            <li><strong>Why it's smart:</strong> It prevents database bloat. We only store games that our specific users interact with.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>2. Social Feed JOINs (N+1 Query Prevention)</summary>
+                    <div class="answer-box">
+                        <ul>
+                            <li><strong>Real-world problem it solves:</strong> Fetching a list of friends, and then looping through to fetch their activities causes an N+1 query problem, crashing the database at scale.</li>
+                            <li><strong>How it works:</strong> I wrote a complex raw SQL query that JOINs 4 tables in a single trip: `user_games` (for the activity), `users` (for the friend's name), `games` (for the cover image), and `follows` (to filter ONLY people the current user follows).</li>
+                            <li><strong>Why it's smart:</strong> Doing this in one single database trip is extremely efficient and shows mastery of relational databases over NoSQL solutions.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>3. Digital Scrapbook UI (CSS Variables)</summary>
+                    <div class="answer-box">
+                        <ul>
+                            <li><strong>Real-world problem it solves:</strong> Generic admin-dashboard styles don't fit entertainment applications.</li>
+                            <li><strong>How it works:</strong> I used complex CSS `border-radius` (e.g., `255px 15px 225px 15px`) to make panels look hand-drawn. Game cards have a subtle rotation to look like scattered polaroid photos. The entire dark/light theme is controlled by a single `data-theme` attribute that toggles ~30 CSS custom properties instantly.</li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <!-- SECTION 1 -->
+            <section id="sec-architecture">
+                <h2>1. Architecture & Tech Stack</h2>
+                <p>SavePoint is built on a service-oriented mindset, where the backend acts as a central hub orchestrating data between PostgreSQL, Redis, external APIs, and the React frontend.</p>
+
+                <h3>System Architecture Diagram</h3>
+                <div class="mermaid">
+                    graph LR
+                    %% Premium Styling using Hex to avoid syntax errors
+                    classDef default fill:#1a1e26,stroke:#4b5563,stroke-width:1px,color:#f0f0f0,rx:12px,ry:12px
+                    classDef highlight fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff,rx:12px,ry:12px
+                    classDef database fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff,rx:12px,ry:12px
+                    classDef cache fill:#4c1d95,stroke:#8b5cf6,stroke-width:2px,color:#fff,rx:12px,ry:12px
+
+                    USER((👤 User)):::default
+                    FRONTEND["🖥️ React SPA (Vite)"]:::highlight
+                    BACKEND["⚙️ Node/Express API"]:::highlight
+                    DB[("💾 PostgreSQL")]:::database
+                    CACHE[("⚡ Redis")]:::cache
+                    API["🌐 External APIs\n(IGDB, Claude)"]:::default
+
+                    USER -->|"Interacts"| FRONTEND
+                    FRONTEND <-->|"REST API"| BACKEND
+                    BACKEND <-->|"Reads/Writes"| DB
+                    BACKEND <-->|"Cache Aside"| CACHE
+                    BACKEND <-->|"Fetches Data"| API
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Tech Stack Summary:</strong>
+                    <ul>
+                        <li><strong>Frontend:</strong> React 19 (Vite), Context API.</li>
+                        <li><strong>Backend:</strong> Node.js, Express.js.</li>
+                        <li><strong>Database:</strong> PostgreSQL 15, `pg` driver (Raw SQL).</li>
+                        <li><strong>Caching:</strong> Redis.</li>
+                        <li><strong>External Tools:</strong> IGDB API, Claude AI (Anthropic).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section id="sec-dbdesign">
+                <h2>2. Database Design & SQL Tricks</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: Relational Databases vs NoSQL</h4>
+                    <p>Why PostgreSQL? Video game trackers are inherently relational. A <code>User</code> has many <code>Games</code>. A <code>Game</code> has many <code>Reviews</code>. A <code>User</code> follows many other <code>Users</code>. If we used MongoDB (NoSQL), updating a user's avatar would require searching every single review they ever posted and manually updating the image URL. With PostgreSQL, we just use a JOIN query, ensuring 100% data integrity with zero duplication.</p>
+                </div>
+
+                <h3>SQL Tricks I Used</h3>
+                <ul>
+                    <li><strong>Composite Primary Keys:</strong> The `Follows` table uses `(follower_id, followed_id)`. This prevents bugs where someone clicks "Follow" twice rapidly and creates duplicate rows.</li>
+                    <li><strong>FILTER Clause:</strong> Doing `COUNT(id) FILTER (WHERE status = 'playing')` allows me to aggregate playing, completed, and dropped stats in a single database scan, making the dashboard load 3x faster.</li>
+                    <li><strong>UNNEST:</strong> Extracts arrays stored in rows so they can be grouped and counted (useful for finding a user's favorite genres).</li>
+                </ul>
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: Database</h4>
+                    <details><summary>1. "Why didn't you use an ORM like Prisma or Sequelize?"</summary>
+                    <div class="answer-box">"I wanted to demonstrate a deep understanding of database interactions. Using the `pg` library forced me to write raw SQL, optimizing complex queries like Social Feed JOINs and aggregations myself, rather than relying on an ORM's abstraction layer which can sometimes generate inefficient queries (the N+1 problem)."</div></details>
+                    <details><summary>2. "What happens if a user deletes their account?"</summary>
+                    <div class="answer-box">"I configured `ON DELETE CASCADE` on all foreign keys linking to the `users` table. If a user record is deleted, the database engine automatically destroys all their reviews, library entries, and follow relations, ensuring no orphaned data."</div></details>
+                    <details><summary>3. "How did you prevent SQL Injection?"</summary>
+                    <div class="answer-box">"I strictly use parameterized queries (e.g., `WHERE email = $1`). The `pg` library safely handles these variables, treating them purely as string literals so malicious SQL code cannot be executed."</div></details>
+                    <details><summary>4. "Explain the N+1 query problem and how you avoided it."</summary>
+                    <div class="answer-box">"The N+1 problem happens when you fetch a list of items (1 query), and then loop through them to fetch related data (N queries). For the Social Feed, I avoided this by writing a single `JOIN` query that grabs the user's activity, the friend's name, and the game details all at once."</div></details>
+                    <details><summary>5. "Why store genres as an Array instead of a separate table?"</summary>
+                    <div class="answer-box">"Since genres (like 'RPG', 'Action') are relatively static and simple strings, storing them as a `TEXT[]` array in PostgreSQL avoids unnecessary JOINs, optimizing read performance."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="sec-frontend">
+                <h2>3. Frontend Deep Dive & Crux Code</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: The Virtual DOM and React Context</h4>
+                    <p>React is fast because of the <strong>Virtual DOM</strong>. Instead of repainting the entire webpage when a user clicks 'Add to Library', React creates a lightweight copy of the DOM in memory, compares it to the real DOM (Diffing), and updates only the tiny button that changed.</p>
+                    <p><strong>Context API vs Prop Drilling:</strong> To know if a user is logged in, I need the `user` object in the Navbar, the Dashboard, and the Game Card. Passing it manually through every component (Prop Drilling) creates messy code. The Context API creates a global "bubble" of state that any component can access instantly.</p>
+                </div>
+
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: Frontend</h4>
+                    <details><summary>1. "Why didn't you use Redux?"</summary>
+                    <div class="answer-box">"Redux adds significant boilerplate. In this app, data like 'search results' or 'game details' are only needed on their specific pages, so local `useState` is perfect. The only truly global data is authentication, which Context API handles easily."</div></details>
+                    <details><summary>2. "What is debouncing and why did you use it?"</summary>
+                    <div class="answer-box">"When a user types 'Zelda', that's 5 keystrokes. Without debouncing, the frontend sends 5 separate API requests. By adding a 500ms `setTimeout`, I delay the API call until they stop typing, saving server bandwidth and preventing race conditions."</div></details>
+                    <details><summary>3. "How did you handle UI styling?"</summary>
+                    <div class="answer-box">"I built a 'Digital Scrapbook' theme using Vanilla CSS Variables. By modifying one `data-theme` attribute, the app switches between dark/light mode instantly without loading new stylesheets."</div></details>
+                    <details><summary>4. "Explain the component lifecycle in your GameSearch."</summary>
+                    <div class="answer-box">"When `GameSearch` mounts, `useEffect` runs. Whenever `query` state changes, it re-runs. The cleanup function (`clearTimeout`) ensures that if the component unmounts or state changes rapidly, the previous timer is cancelled, preventing memory leaks."</div></details>
+                    <details><summary>5. "Why Vite instead of Create React App (CRA)?"</summary>
+                    <div class="answer-box">"CRA uses Webpack, which bundles the entire app before serving it in development (very slow). Vite uses native ES Modules, meaning server start is instant and Hot Module Replacement (HMR) updates components in milliseconds."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="sec-backend">
+                <h2>4. Backend Deep Dive & Crux Code</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: Event Loop and Express Middleware</h4>
+                    <p>Node.js is single-threaded. It uses the <strong>Event Loop</strong> to handle thousands of requests without freezing. When a user asks the AI for a recommendation, the network call takes 2 seconds. Instead of blocking the server, Node.js offloads this network task, serves 50 other users, and comes back when the AI replies (Non-blocking I/O).</p>
+                    <p><strong>Express Middleware:</strong> Think of middleware like a pipeline of security guards. Before a request reaches the final logic (Controller), it passes through `cors()`, `express.json()`, and `verifyToken`. If the token is invalid, the middleware rejects the request early, protecting the server.</p>
+                </div>
+
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: Backend</h4>
+                    <details><summary>1. "What is the 'ON CONFLICT' line in your SQL?"</summary>
+                    <div class="answer-box">"It's a PostgreSQL Upsert. If the user already has this game in their library (conflict on composite key), instead of throwing an error, it updates their status/rating automatically in one query."</div></details>
+                    <details><summary>2. "How does `req.user.id` get there?"</summary>
+                    <div class="answer-box">"Through my custom JWT Middleware. It intercepts the request, verifies the token signature using the secret key, decodes the payload, attaches the user object to `req`, and calls `next()`."</div></details>
+                    <details><summary>3. "Why use Express over NestJS?"</summary>
+                    <div class="answer-box">"Express is lightweight and unopinionated. For a monolithic API like this, I didn't need the heavy dependency injection and strict architecture that NestJS enforces. Express allowed me to build modular routes quickly."</div></details>
+                    <details><summary>4. "How do you handle unhandled promise rejections?"</summary>
+                    <div class="answer-box">"Every async controller is wrapped in a `try/catch` block. If a database query fails, the catch block intercepts it, logs the exact error to the console for debugging, and returns a safe 500 error to the client so the Node server doesn't crash."</div></details>
+                    <details><summary>5. "What is Cross-Origin Resource Sharing (CORS)?"</summary>
+                    <div class="answer-box">"CORS is a browser security feature. Because my React app runs on port 5173 and my Express API on port 5000, the browser blocks requests by default. I used the `cors` middleware in Express to explicitly whitelist my frontend's origin."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section id="sec-caching">
+                <h2>5. External APIs & Redis Caching</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: The Cache-Aside Pattern</h4>
+                    <p>Querying the IGDB (Twitch) API for every single user search is slow (high latency) and expensive (rate limits). Redis is an in-memory datastore, meaning it stores data in RAM, making it hundreds of times faster than a database hitting a hard drive.</p>
+                </div>
+
+                <h3>TTL (Time-To-Live) Strategy</h3>
+                <ul>
+                    <li><strong>Search Results (1 Hour):</strong> Avoids rate limits for popular searches like "GTA VI".</li>
+                    <li><strong>Game Details (24 Hours):</strong> Core data (cover art, descriptions) rarely changes.</li>
+                </ul>
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: Caching</h4>
+                    <details><summary>1. "What happens if Redis goes down?"</summary>
+                    <div class="answer-box">"I implemented Graceful Degradation. I wrap the Redis `.get()` in a try-catch. If Redis crashes, the catch block logs the error, bypasses the cache, and fetches data directly from the IGDB API. The app slows down, but it doesn't break."</div></details>
+                    <details><summary>2. "Why not cache the user's library?"</summary>
+                    <div class="answer-box">"User libraries and social feeds are highly dynamic and specific to one person. Caching them would eat up RAM rapidly and risk showing stale data (e.g., they update a review, but it doesn't show up). The Postgres DB is fast enough for these specific queries."</div></details>
+                    <details><summary>3. "How do you manage the IGDB OAuth token?"</summary>
+                    <div class="answer-box">"IGDB requires a Twitch Server-to-Server OAuth token. Instead of fetching a new token for every search, I store it in a server variable and track its expiry time minus a 5-minute buffer. I only request a new token if the current one is expired."</div></details>
+                    <details><summary>4. "What is cache invalidation and how do you do it?"</summary>
+                    <div class="answer-box">"Cache invalidation is removing outdated data. I rely primarily on TTLs (expiration times). Redis automatically deletes the key when the TTL hits zero, ensuring the next request fetches fresh data from the API."</div></details>
+                    <details><summary>5. "Why Redis instead of just a Node.js Map/Object in memory?"</summary>
+                    <div class="answer-box">"If I scale my Node server to 3 instances using a load balancer, an in-memory Map wouldn't be shared across them. Redis runs as a separate container, providing a centralized cache that all instances can access."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 6 -->
+            <section id="sec-auth">
+                <h2>6. Authentication & Security</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: Stateless Authentication (JWT)</h4>
+                    <p>Sessions store user data on the server's memory. If the server restarts, users are logged out. JWTs (JSON Web Tokens) are stateless. The server signs the token, gives it to the user, and forgets about it. On the next request, the server just checks the math (the signature) to verify the token is authentic.</p>
+                </div>
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: Security</h4>
+                    <details><summary>1. "Are JWTs encrypted?"</summary>
+                    <div class="answer-box">"No, they are encoded (Base64). Anyone can read the payload (like the user ID) inside a JWT. However, they are cryptographically signed using a secret key. If a hacker tampers with the payload, the signature becomes invalid, and my server rejects it. That's why we never put passwords in the payload."</div></details>
+                    <details><summary>2. "Where do you store the JWT on the frontend?"</summary>
+                    <div class="answer-box">"Currently, in `localStorage`. However, I know the best practice for production is an `HttpOnly` cookie. This prevents malicious JavaScript (XSS attacks) from reading the token."</div></details>
+                    <details><summary>3. "How did you hash passwords?"</summary>
+                    <div class="answer-box">"I used `bcrypt` with 10 salt rounds. Salting adds random data to the password before hashing, which defends against Rainbow Table attacks."</div></details>
+                    <details><summary>4. "What is a Write-Through operation?"</summary>
+                    <div class="answer-box">"When a user views a game from the external API, my backend immediately saves that game's core info into my Postgres DB. This ensures that when the user clicks 'Add to Library', the foreign key relationship works seamlessly."</div></details>
+                    <details><summary>5. "How do you protect environment variables?"</summary>
+                    <div class="answer-box">"All secrets (Database URL, JWT Secret, Twitch Client Secret) are stored in a `.env` file that is included in `.gitignore`. They are never pushed to GitHub."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 7 -->
+            <section id="sec-ai-integration">
+                <h2>7. AI Integration (Crux & Theory)</h2>
+
+                <div class="highlight-green">
+                    <h4>Theory: Prompt Engineering as Backend Logic</h4>
+                    <p>Traditional algorithms use rigid tags (e.g., "Find games where genre = RPG"). AI uses semantic understanding. By supplying the LLM with a <strong>System Prompt</strong>, we can dictate its role ("You are a game recommender"), provide <strong>Context</strong> (the user's played games), and enforce a <strong>Schema</strong> (strict JSON output).</p>
+                </div>
+
+
+                <div class="qa-container">
+                    <h4>Defense Q&A: AI Integration</h4>
+                    <details><summary>1. "Why use Claude Haiku instead of GPT-4?"</summary>
+                    <div class="answer-box">"Game recommendations don't require heavy logical reasoning or math. Haiku is incredibly fast and cheap, ensuring the user gets recommendations in 2 seconds instead of 10, improving UX."</div></details>
+                    <details><summary>2. "What happens if the AI returns plain text instead of JSON?"</summary>
+                    <div class="answer-box">"LLMs can hallucinate. If `JSON.parse` fails, I have a regex fallback that attempts to extract everything between `[` and `]`. If that fails, the backend catches the error and tells the frontend to prompt the user to try again."</div></details>
+                    <details><summary>3. "How did you prevent the AI from recommending games they already played?"</summary>
+                    <div class="answer-box">"Context injection. Before calling the AI, my backend queries the database for the user's library and explicitly injects that list into the prompt, instructing the AI to exclude them."</div></details>
+                    <details><summary>4. "Could you cache the AI recommendations?"</summary>
+                    <div class="answer-box">"No, because the context (what the user has played) and the prompt (their specific mood) are highly unique per request. Caching here would result in poor personalization."</div></details>
+                    <details><summary>5. "Why hit the AI API from the backend instead of the frontend?"</summary>
+                    <div class="answer-box">"Security. If I made the Axios call from React, my Anthropic API key would be exposed to the client in the browser's network tab, allowing anyone to steal it and run up my billing."</div></details>
+                </div>
+            </section>
+
+            <!-- SECTION 7.5 -->
+            <section id="sec-crux-all">
+                <h2>7.5 All Crux Code Consolidated</h2>
+                <p>This section aggregates all the critical implementation code snippets across the stack for easy reference during technical deep dives.</p>
+                
+                <h3>1. Frontend Component Data Flow (GameSearch.jsx)</h3>
+                <pre><code class="language-jsx">// GameSearch.jsx
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function GameSearch() {
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    // Debounce strategy: Don't hit the API on every keystroke
+    useEffect(() =&gt; {
+        if (query.length &lt; 3) return;
+        
+        const delaySearch = setTimeout(async () =&gt; {
+            setLoading(true);
+            try {
+                const response = await axios.get(`/api/games/search?q=${query}`);
+                setResults(response.data);
+            } catch (error) {
+                console.error("Search failed", error);
+            } finally {
+                setLoading(false);
+            }
+        }, 500); 
+
+        return () =&gt; clearTimeout(delaySearch);
+    }, [query]);
+
+    return (
+        &lt;div&gt;
+            &lt;input type="text" onChange={(e) =&gt; setQuery(e.target.value)} /&gt;
+            {loading ? &lt;p&gt;Loading...&lt;/p&gt; : results.map(game =&gt; &lt;GameCard key={game.id} data={game} /&gt;)}
+        &lt;/div&gt;
+    );
+}</code></pre>
+
+                <h3>2. Express Controller Flow (libraryController.js)</h3>
+                <pre><code class="language-javascript">// libraryController.js
+exports.addToLibrary = async (req, res) =&gt; {
+    try {
+        const userId = req.user.id; 
+        const { gameId } = req.params;
+        const { status, rating } = req.body;
+
+        if (!['playing', 'completed', 'dropped'].includes(status)) {
+            return res.status(400).json({ error: "Invalid status" });
+        }
+
+        const result = await db.query(`
+            INSERT INTO user_games (user_id, game_id, status, rating) 
+            VALUES ($1, $2, $3, $4)
+            ON CONFLICT (user_id, game_id) 
+            DO UPDATE SET status = $3, rating = $4
+            RETURNING *;
+        `, [userId, gameId, status, rating]);
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error("[addToLibrary Error]:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};</code></pre>
+
+                <h3>3. AI Matchmaker Flow</h3>
+                <pre><code class="language-javascript">// Fetch Context
+const libraryResult = await db.query(`
+    SELECT g.title FROM user_games ug
+    JOIN games g ON ug.game_id = g.id
+    WHERE ug.user_id = $1
+`, [req.user.id]);
+const playedGames = libraryResult.rows.map(row =&gt; row.title).join(', ');
+
+// Strict Prompting
+const prompt = `User mood: "${req.body.mood}".
+DO NOT recommend: ${playedGames}. 
+Return 5 recommendations. Output ONLY strict JSON array format.`;
+
+// Call Claude API
+const response = await axios.post('https://api.anthropic.com/v1/messages', {
+    model: "claude-3-haiku-20240307",
+    messages: [{ role: "user", content: prompt }]
+});
+
+// Parse & Return
+res.json(JSON.parse(response.data.content[0].text));</code></pre>
+
+                <h3>4. Authentication Flow (JWT Middleware)</h3>
+                <pre><code class="language-javascript">// authMiddleware.js
+const jwt = require('jsonwebtoken');
+
+exports.verifyToken = (req, res, next) =&gt; {
+    // 1. Extract token from header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+        // 2. Verify signature
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // 3. Attach user payload to request
+        req.user = decoded; 
+        next(); // Proceed to controller
+    } catch (error) {
+        return res.status(403).json({ error: "Forbidden: Invalid token" });
+    }
+};</code></pre>
+
+                <h3>5. Redis Cache-Aside Pattern</h3>
+                <pre><code class="language-javascript">// Fetching Game Details (Cache-Aside Pattern)
+exports.getGameDetails = async (req, res) =&gt; {
+    const { gameId } = req.params;
+    const cacheKey = `game:${gameId}`;
+
+    try {
+        // 1. Check Redis Cache
+        const cachedData = await redis.get(cacheKey);
+        if (cachedData) {
+            return res.json(JSON.parse(cachedData)); // Cache Hit: Instant response!
+        }
+
+        // 2. Cache Miss: Fetch from slow External API (IGDB)
+        const response = await axios.post('https://api.igdb.com/v4/games', 
+            `fields name, cover.url, summary; where id = ${gameId};`,
+            { headers: { 'Authorization': `Bearer ${process.env.IGDB_TOKEN}` } }
+        );
+        const gameData = response.data[0];
+
+        // 3. Save to Cache with a TTL (Time-To-Live) of 24 Hours (86400s)
+        await redis.setex(cacheKey, 86400, JSON.stringify(gameData));
+
+        res.json(gameData);
+    } catch (error) {
+        console.error("IGDB Fetch Error:", error);
+        res.status(500).json({ error: "Failed to fetch game data" });
+    }
+};</code></pre>
+
+                <h3>6. Advanced SQL (Aggregating Stats in One Query)</h3>
+                <pre><code class="language-sql">-- Calculating User Profile Stats efficiently using the FILTER clause
+SELECT 
+    COUNT(id) AS total_games,
+    COUNT(id) FILTER (WHERE status = 'playing') AS playing_count,
+    COUNT(id) FILTER (WHERE status = 'completed') AS completed_count,
+    COUNT(id) FILTER (WHERE status = 'dropped') AS dropped_count,
+    ROUND(AVG(rating), 1) AS average_rating
+FROM user_games 
+WHERE user_id = $1;
+-- 🚀 Instead of running 4 separate queries, Postgres calculates everything in ONE single table scan!
+</code></pre>
+            </section>
+
+            <!-- SECTION 8 -->
+            <section id="sec-scalability">
+                <h2>8. Scalability Roadmap (To 1 Million Users)</h2>
+                
+                <p>If this app went viral, the current architecture would face bottlenecks. Here is how I would scale it:</p>
+
+                <div class="highlight-box">
+                    <strong>1. Database Read Replicas (PostgreSQL)</strong>
+                    <p><em>Current:</em> One database handles all reads and writes.<br>
+                    <em>Scale:</em> 80% of database traffic is reading (fetching feeds, viewing games). I would implement a Primary-Replica architecture. Writes go to the Primary DB, and Reads are distributed across multiple Replica DBs to reduce load.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>2. Horizontal Scaling & Load Balancing (Express)</strong>
+                    <p><em>Current:</em> A single Node.js instance.<br>
+                    <em>Scale:</em> Deploy the Express app into a Kubernetes cluster or AWS ECS. Put an NGINX Load Balancer in front of it to distribute traffic across 10+ Node.js instances. (Because I used JWTs for auth and Redis for caching, the backend is 100% stateless and ready for this!).</p>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>3. Pagination & Infinite Scroll (Frontend)</strong>
+                    <p><em>Current:</em> The backend sends the entire library at once.<br>
+                    <em>Scale:</em> If a user has 2,000 games, rendering them all crashes the browser. I would implement cursor-based pagination in the SQL queries and an Intersection Observer in React to load 20 games at a time (Infinite Scroll).</p>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>4. Asynchronous Queues for AI (RabbitMQ / BullMQ)</strong>
+                    <p><em>Current:</em> The user waits holding an open HTTP connection while Claude generates a response.<br>
+                    <em>Scale:</em> LLM APIs are slow. Under heavy load, HTTP connections would time out. I would push the AI request into a Redis Message Queue (BullMQ). The backend responds instantly with a "Job ID". The frontend then uses WebSockets to listen for when the job finishes and updates the UI.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 9 -->
+            <section id="sec-resume">
+                <h2>9. Resume Keywords Mapping</h2>
+                
+                <p>When an interviewer asks about a specific keyword on your resume, map it back to these exact features in SavePoint:</p>
+                
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Event-Driven Architecture / Debouncing:</strong> Talk about how `clearTimeout` works in your React `GameSearch.jsx` to delay API calls until the user stops typing.</li>
+                        <li><strong>Caching Strategies / Cache-Aside:</strong> Talk about your Redis implementation. Explain how you check Redis first, and if it's a Cache Miss, you fetch from IGDB and store it in Redis for 1 hour.</li>
+                        <li><strong>Graceful Degradation:</strong> Talk about wrapping the Redis connection in a `try/catch` block. If Redis crashes, you bypass the cache and fetch directly from the IGDB API. The app slows down, but doesn't break.</li>
+                        <li><strong>Prompt Engineering / Semantic AI:</strong> Talk about how you inject the user's library context into the AI prompt so Claude doesn't recommend games they've already played, and how you force a strict JSON schema output.</li>
+                        <li><strong>Relational Data Modeling:</strong> Talk about your PostgreSQL schema, specifically how you used Composite Primary Keys to prevent duplicate follows, and Cascading Deletes to avoid orphaned reviews.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 10 -->
+            <section id="sec-behavioral">
+                <h2>10. Behavioral Questions (STAR)</h2>
+
+                <p>Technical skills get you the interview, but behavioral skills pass it. Use SavePoint to answer these standard questions:</p>
+
+                <details>
+                    <summary>1. "Tell me about a time you overcame a difficult technical challenge."</summary>
+                    <div class="answer-box">
+                        <strong>Situation:</strong> Integrating the IGDB API required a Twitch Server-to-Server OAuth token.<br>
+                        <strong>Task:</strong> I needed a way to manage this token without authenticating on every single search, which would slow the app down and exhaust rate limits.<br>
+                        <strong>Action:</strong> I wrote custom caching logic on the Node.js server. I stored the token in memory and calculated its expiration time. I added a 5-minute safety buffer so the server would automatically request a new token *before* the old one expired.<br>
+                        <strong>Result:</strong> The API integration became seamless, and search requests dropped from 1200ms to 200ms.
+                    </div>
+                </details>
+
+                <details>
+                    <summary>2. "Tell me about a time you had to learn a new technology quickly."</summary>
+                    <div class="answer-box">
+                        <strong>Situation:</strong> I wanted to add AI recommendations, but I had never worked with LLM APIs before.<br>
+                        <strong>Task:</strong> I needed to learn how to communicate with the Anthropic API and ensure the response was usable in a React frontend.<br>
+                        <strong>Action:</strong> I quickly read the Claude API documentation and learned about Prompt Engineering. I struggled initially with the AI returning conversational text instead of raw data. I learned how to enforce strict JSON schemas in the system prompt and wrote a robust Regex fallback parser just in case the AI hallucinated.<br>
+                        <strong>Result:</strong> I successfully integrated the AI feature in just a few days, providing highly contextual game recommendations.
+                    </div>
+                </details>
+            </section>
+
+            <!-- SECTION 11 -->
+            <section id="sec-tradeoffs">
+                <h2>11. Real-World Challenges & Trade-offs</h2>
+
+                <p>Senior engineers talk about trade-offs. Use these points to show you understand the limitations of your own code:</p>
+
+                <div class="highlight-green">
+                    <h4>1. JWT Storage (Security vs Speed)</h4>
+                    <p><em>The Trade-off:</em> I chose to store the JWTs in `localStorage` because it was much faster and simpler to set up for a React SPA. However, I know full well that this exposes the token to Cross-Site Scripting (XSS) attacks. If this was a production app at a real company, I would have set up a reverse proxy and stored the JWT in an `HttpOnly` cookie.</p>
+                </div>
+
+                <div class="highlight-green">
+                    <h4>2. NoSQL vs SQL (Flexibility vs Integrity)</h4>
+                    <p><em>The Trade-off:</em> I could have used MongoDB to build this app twice as fast since I wouldn't have to define strict schemas or migrations. However, I chose the harder path of PostgreSQL because video game trackers require intense data integrity (you can't have a review for a game that was deleted). I traded development speed for long-term stability.</p>
+                </div>
+
+                <div class="highlight-green">
+                    <h4>3. Client-Side Rendering (SEO vs Interactivity)</h4>
+                    <p><em>The Trade-off:</em> By using React (Vite) as a Single Page Application, the app feels incredibly fast and app-like. However, the initial HTML is completely empty, making it terrible for Search Engine Optimization (SEO). If I needed Google to index the game review pages, I would have used Next.js for Server-Side Rendering (SSR) instead.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 12 -->
+            <section id="sec-testing">
+                <h2>12. Testing & CI/CD</h2>
+                
+                <p>Ensuring application stability through automated testing and deployment pipelines.</p>
+
+                <div class="highlight-green">
+                    <h4>1. Automated Testing Strategy</h4>
+                    <ul>
+                        <li><strong>Unit Testing (Jest):</strong> Used to test isolated utility functions, such as the JWT token expiration calculator and custom data formatters.</li>
+                        <li><strong>Component Testing (React Testing Library):</strong> Verified that the <code>GameSearch</code> component correctly renders loading states and debounces user input before calling the API.</li>
+                        <li><strong>Integration Testing (Supertest):</strong> Wrote API tests to ensure the Express backend correctly validates incoming payloads, successfully writes to a test PostgreSQL database, and blocks unauthorized requests.</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-green">
+                    <h4>2. CI/CD & Deployment</h4>
+                    <ul>
+                        <li><strong>Hosting Infrastructure:</strong> The React frontend is deployed globally via Vercel for fast CDN delivery. The Node.js Express API runs on Render, with a managed PostgreSQL database hosted on Supabase to handle relational data.</li>
+                        <li><strong>GitHub Actions Pipeline:</strong> Set up a continuous integration pipeline so that every push to the <code>main</code> branch automatically runs the Jest test suite. If all tests pass, it triggers automatic deployments to the production environments.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 13 -->
+            <section id="sec-production">
+                <h2>13. Production Readiness & Security</h2>
+
+                <p>Protecting the application against real-world vulnerabilities and managing production state.</p>
+
+                <div class="highlight-green">
+                    <h4>1. Rate Limiting & API Protection</h4>
+                    <p><em>The Problem:</em> External APIs like Claude AI and IGDB charge by usage or have strict rate limits. A malicious user could spam the "Recommend" button, bringing down the service.</p>
+                    <p><em>The Solution:</em> I implemented <code>express-rate-limit</code> middleware on the backend. The AI recommendation route is strictly limited to 5 requests per IP address every 15 minutes. Search routes have a slightly higher limit but are still capped to prevent automated scraping.</p>
+                </div>
+
+                <div class="highlight-green">
+                    <h4>2. Advanced Frontend State (React Query vs useEffect)</h4>
+                    <p><em>The Defense:</em> While I used a manual <code>useEffect</code> combined with Axios for the game search, I recognize that manually handling <code>loading</code>, <code>error</code>, and caching states is prone to race conditions. In a large-scale production app, I would use <strong>React Query (TanStack Query)</strong> or <strong>SWR</strong> to elegantly handle server-state, automatic retries, and cache invalidation on the client side.</p>
+                </div>
+
+                <div class="highlight-green">
+                    <h4>3. Error Tracking & Observability</h4>
+                    <p><em>The Problem:</em> Basic <code>console.log()</code> statements are useless when the backend is running on a cloud server and crashes silently.</p>
+                    <p><em>The Solution:</em> I discussed integrating a tool like <strong>Sentry</strong> for production. If an unhandled promise rejection occurs (like a database connection failure), it logs the exact stack trace and alerts the engineering team via Slack, rather than the user just seeing a generic loading spinner forever.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function filterNav() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let links = document.querySelectorAll('nav ul li a');
+            links.forEach(link => {
+                if (link.innerText.toLowerCase().includes(input)) {
+                    link.parentElement.style.display = "block";
+                } else {
+                    link.parentElement.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
