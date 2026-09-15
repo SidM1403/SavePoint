@@ -50,7 +50,7 @@ export default function Search() {
             if (genresToSearch.length > 0) params.append('genres', genresToSearch.join(','));
             if (sortToSearch && sortToSearch !== 'relevance') params.append('sort', sortToSearch);
             
-            const res = await axios.get(`http://localhost:5005/api/games/search?${params.toString()}`);
+            const res = await axios.get(`https://savepoint-jd2r.onrender.com/api/games/search?${params.toString()}`);
             setResults(res.data);
         } catch (err) {
             console.error(err);

@@ -20,7 +20,7 @@ export default function Community() {
 
     const fetchFeed = async () => {
         try {
-            const res = await axios.get('http://localhost:5005/api/users/feed/activity', {
+            const res = await axios.get('https://savepoint-jd2r.onrender.com/api/users/feed/activity', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setFeed(res.data);
@@ -35,7 +35,7 @@ export default function Community() {
         e.preventDefault();
         if (!searchQuery.trim()) return;
         try {
-            const res = await axios.get(`http://localhost:5005/api/users/search/all?q=${encodeURIComponent(searchQuery.trim())}`);
+            const res = await axios.get(`https://savepoint-jd2r.onrender.com/api/users/search/all?q=${encodeURIComponent(searchQuery.trim())}`);
             setSearchResults(res.data);
         } catch (err) {
             console.error(err);
@@ -44,7 +44,7 @@ export default function Community() {
 
     const handleFollow = async (userId) => {
         try {
-            await axios.post(`http://localhost:5005/api/users/${userId}/follow`, {}, {
+            await axios.post(`https://savepoint-jd2r.onrender.com/api/users/${userId}/follow`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Simple UX: just alert or change button state. For now we just alert.

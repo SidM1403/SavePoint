@@ -13,7 +13,7 @@ export default function Dashboard() {
         if (!user) return;
         const fetchDashboard = async () => {
             try {
-                const res = await axios.get('http://localhost:5005/api/dashboard');
+                const res = await axios.get('https://savepoint-jd2r.onrender.com/api/dashboard');
                 setData(res.data);
             } catch (err) {
                 console.error(err);

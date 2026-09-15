@@ -15,7 +15,7 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:5005/api/auth/login', { email, password });
+            const res = await axios.post('https://savepoint-jd2r.onrender.com/api/auth/login', { email, password });
             login(res.data.token, res.data.user);
             navigate('/dashboard');
         } catch (err) {

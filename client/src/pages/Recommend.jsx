@@ -21,7 +21,7 @@ export default function Recommend() {
         setRecommendations([]);
 
         try {
-            const res = await axios.post('http://localhost:5005/api/ai/recommend', { mood });
+            const res = await axios.post('https://savepoint-jd2r.onrender.com/api/ai/recommend', { mood });
             setRecommendations(res.data);
         } catch (err) {
             console.error(err);

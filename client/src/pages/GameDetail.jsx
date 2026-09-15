@@ -28,18 +28,18 @@ export default function GameDetail() {
     useEffect(() => {
         const fetchGameAndLibrary = async () => {
             try {
-                const gameRes = await axios.get(`http://localhost:5005/api/games/${id}`);
+                const gameRes = await axios.get(`https://savepoint-jd2r.onrender.com/api/games/${id}`);
                 setGame(gameRes.data);
                 
-                const reviewsRes = await axios.get(`http://localhost:5005/api/games/${id}/reviews`);
+                const reviewsRes = await axios.get(`https://savepoint-jd2r.onrender.com/api/games/${id}/reviews`);
                 setCommunityReviews(reviewsRes.data);
 
                 if (user && token) {
-                    const libRes = await axios.get('http://localhost:5005/api/library', { headers: { Authorization: `Bearer ${token}` } });
+                    const libRes = await axios.get('https://savepoint-jd2r.onrender.com/api/library', { headers: { Authorization: `Bearer ${token}` } });
                     const entry = libRes.data.find(e => e.rawg_id.toString() === id);
                     if (entry) setLibraryEntry(entry);
 
-                    const listsRes = await axios.get('http://localhost:5005/api/lists/my-lists', { headers: { Authorization: `Bearer ${token}` } });
+                    const listsRes = await axios.get('https://savepoint-jd2r.onrender.com/api/lists/my-lists', { headers: { Authorization: `Bearer ${token}` } });
                     setMyLists(listsRes.data);
                 }
             } catch (err) {
@@ -55,7 +55,7 @@ export default function GameDetail() {
     const handleAddToLibrary = async (status) => {
         setAdding(true);
         try {
-            const res = await axios.post('http://localhost:5005/api/library', { rawg_id: parseInt(id), status }, { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.post('https://savepoint-jd2r.onrender.com/api/library', { rawg_id: parseInt(id), status }, { headers: { Authorization: `Bearer ${token}` } });
             setLibraryEntry({ tracking_id: res.data.id, status: res.data.status, rating: null, review: null });
         } catch (err) {
             alert(err.response?.data?.message || 'Failed to add to library');
@@ -68,7 +68,7 @@ export default function GameDetail() {
         if (!selectedList) return;
         setAddingToList(true);
         try {
-            await axios.post(`http://localhost:5005/api/lists/${selectedList}/games`, { game_id: game.id }, {
+            await axios.post(`https://savepoint-jd2r.onrender.com/api/lists/${selectedList}/games`, { game_id: game.id }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert('Game added to list!');

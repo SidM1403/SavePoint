@@ -17,7 +17,7 @@ export default function ListDetail() {
 
     const fetchList = async () => {
         try {
-            const res = await axios.get(`http://localhost:5005/api/lists/${id}`);
+            const res = await axios.get(`https://savepoint-jd2r.onrender.com/api/lists/${id}`);
             setList(res.data);
         } catch (err) {
             console.error(err);
@@ -30,7 +30,7 @@ export default function ListDetail() {
     const handleRemoveGame = async (gameId) => {
         if (!confirm('Are you sure you want to remove this game from the list?')) return;
         try {
-            await axios.delete(`http://localhost:5005/api/lists/${id}/games/${gameId}`, {
+            await axios.delete(`https://savepoint-jd2r.onrender.com/api/lists/${id}/games/${gameId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Update local state

@@ -9,7 +9,7 @@ export default function ReviewForm({ trackingId, initialRating, initialReview, o
     const handleSave = async () => {
         setSaving(true);
         try {
-            const res = await axios.put(`http://localhost:5005/api/library/${trackingId}`, {
+            const res = await axios.put(`https://savepoint-jd2r.onrender.com/api/library/${trackingId}`, {
                 rating: rating ? parseInt(rating) : null,
                 review
             });

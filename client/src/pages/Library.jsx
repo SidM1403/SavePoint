@@ -14,7 +14,7 @@ export default function Library() {
         if (!user) return;
         const fetchLibrary = async () => {
             try {
-                const res = await axios.get('http://localhost:5005/api/library');
+                const res = await axios.get('https://savepoint-jd2r.onrender.com/api/library');
                 setLibrary(res.data);
             } catch (err) {
                 console.error(err);

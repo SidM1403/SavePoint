@@ -24,7 +24,7 @@ export default function Lists() {
 
     const fetchLists = async () => {
         try {
-            const res = await axios.get('http://localhost:5005/api/lists/my-lists', {
+            const res = await axios.get('https://savepoint-jd2r.onrender.com/api/lists/my-lists', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setLists(res.data);
@@ -40,7 +40,7 @@ export default function Lists() {
         if (!newName.trim()) return;
         
         try {
-            const res = await axios.post('http://localhost:5005/api/lists', {
+            const res = await axios.post('https://savepoint-jd2r.onrender.com/api/lists', {
                 name: newName,
                 description: newDesc,
                 is_private: isPrivate

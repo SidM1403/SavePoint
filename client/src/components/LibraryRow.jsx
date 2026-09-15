@@ -16,7 +16,7 @@ export default function LibraryRow({ entry, onUpdate, onRemove }) {
 
     const handleSave = async () => {
         try {
-            const res = await axios.put(`http://localhost:5005/api/library/${entry.tracking_id}`, {
+            const res = await axios.put(`https://savepoint-jd2r.onrender.com/api/library/${entry.tracking_id}`, {
                 status, rating: rating ? parseInt(rating) : null
             });
             onUpdate(res.data);
@@ -29,7 +29,7 @@ export default function LibraryRow({ entry, onUpdate, onRemove }) {
     const handleRemove = async () => {
         if (!window.confirm('Are you sure you want to remove this game from your library?')) return;
         try {
-            await axios.delete(`http://localhost:5005/api/library/${entry.tracking_id}`);
+            await axios.delete(`https://savepoint-jd2r.onrender.com/api/library/${entry.tracking_id}`);
             onRemove(entry.tracking_id);
         } catch (err) {
             console.error('Failed to remove', err);

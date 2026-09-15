@@ -16,8 +16,8 @@ export default function Landing() {
     const fetchData = async () => {
       try {
         const [gamesRes, activityRes] = await Promise.all([
-          axios.get('http://localhost:5005/api/games/landing'),
-          axios.get('http://localhost:5005/api/games/activity')
+          axios.get('https://savepoint-jd2r.onrender.com/api/games/landing'),
+          axios.get('https://savepoint-jd2r.onrender.com/api/games/activity')
         ]);
         setGamesData(gamesRes.data);
         setActivity(activityRes.data);
@@ -34,7 +34,7 @@ export default function Landing() {
     if (user) {
       const fetchRecommended = async () => {
         try {
-          const res = await axios.get('http://localhost:5005/api/games/recommended');
+          const res = await axios.get('https://savepoint-jd2r.onrender.com/api/games/recommended');
           if (res.data.games && res.data.games.length > 0) {
             setRecommended(res.data);
           }
