@@ -182,23 +182,20 @@ const Navbar = () => {
                 </button>
 
               {dropdownOpen && (
-                <div style={{ 
-                  position: 'absolute', 
-                  right: 0, 
-                  top: '100%', 
-                  marginTop: '8px',
-                  width: '200px', 
-                  background: 'var(--bg-tertiary)', 
-                  border: '2px solid var(--text-primary)', 
-                  borderRadius: '4px', 
-                  padding: '8px 0', 
-                  boxShadow: '4px 4px 0 rgba(0,0,0,0.1)',
-                  zIndex: 1001
-                }}>
-                  <Link to="/dashboard" style={{ display: 'block', padding: '12px 20px', color: 'var(--text-primary)', textDecoration: 'none', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'var(--bg-secondary)'} onMouseOut={e => e.target.style.background = 'transparent'}>Dashboard</Link>
-                  <Link to="/library" style={{ display: 'block', padding: '12px 20px', color: 'var(--text-primary)', textDecoration: 'none', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'var(--bg-secondary)'} onMouseOut={e => e.target.style.background = 'transparent'}>Library</Link>
-                  <div style={{ height: '1px', background: 'var(--text-primary)', margin: '8px 0' }}></div>
-                  <div onClick={handleLogout} style={{ display: 'block', padding: '12px 20px', color: '#ef4444', textDecoration: 'none', cursor: 'pointer', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'rgba(239, 68, 68, 0.1)'} onMouseOut={e => e.target.style.background = 'transparent'}>Logout</div>
+                <div style={{ position: 'absolute', right: 0, top: '100%', paddingTop: '8px', zIndex: 1001 }}>
+                  <div style={{ 
+                    width: '200px', 
+                    background: 'var(--bg-tertiary)', 
+                    border: '2px solid var(--text-primary)', 
+                    borderRadius: '4px', 
+                    padding: '8px 0', 
+                    boxShadow: '4px 4px 0 rgba(0,0,0,0.1)'
+                  }}>
+                    <Link to="/dashboard" style={{ display: 'block', padding: '12px 20px', color: 'var(--text-primary)', textDecoration: 'none', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'var(--bg-secondary)'} onMouseOut={e => e.target.style.background = 'transparent'}>Dashboard</Link>
+                    <Link to="/library" style={{ display: 'block', padding: '12px 20px', color: 'var(--text-primary)', textDecoration: 'none', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'var(--bg-secondary)'} onMouseOut={e => e.target.style.background = 'transparent'}>Library</Link>
+                    <div style={{ height: '1px', background: 'var(--text-primary)', margin: '8px 0' }}></div>
+                    <div onClick={handleLogout} style={{ display: 'block', padding: '12px 20px', color: '#ef4444', textDecoration: 'none', cursor: 'pointer', transition: 'background 0.2s' }} onMouseOver={e => e.target.style.background = 'rgba(239, 68, 68, 0.1)'} onMouseOut={e => e.target.style.background = 'transparent'}>Logout</div>
+                  </div>
                 </div>
               )}
             </div>
